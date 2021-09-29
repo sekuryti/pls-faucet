@@ -28,20 +28,27 @@
     ],
     iconUrls: [],
   }
+  const updateChainId = async () => {
+    if (!ethereum) {
+      return
+    }
+    const chainId = await ethereum.request({
+      method: 'eth_chainId',
+    })
+    network = chainId
+  }
+  const requestAccounts = async () => {
+    if (!ethereum) {
+      return
+    }
+    const accounts = await ethereum.request({
+      method: 'eth_requestAccounts',
+    })
+    address = accounts[0]
+  }
   if (window.ethereum) {
     network = ethereum.chainId
-    const updateChainId = async () => {
-      const chainId = await ethereum.request({
-        method: 'eth_chainId',
-      })
-      network = chainId
-    }
-    ethereum.once('connect', async () => {
-      const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
-      })
-      address = accounts[0]
-    })
+    ethereum.once('connect', requestAccounts)
     ethereum.on('connect', updateChainId)
     ethereum.on('chainChanged', updateChainId)
     ethereum.on('accountsChanged', (accounts) => {
@@ -59,7 +66,8 @@
       disabled = true
       return
     }
-    network = testnetConfig.chainId
+    updateChainId()
+    requestAccounts()
     faucetInfo.network = capitalize(faucetInfo.network);
     faucetInfo.payout = parseInt(formatEther(faucetInfo.payout));
   });
