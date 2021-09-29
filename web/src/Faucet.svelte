@@ -53,7 +53,7 @@
     try {
       faucetInfo = await res.json();
     } catch (err) {}
-    if (faucetInfo.account === '0x0000000000000000000000000000000000000000') {
+    if (!faucetInfo.account || faucetInfo.account === '0x0000000000000000000000000000000000000000') {
       network = testnetConfig.chainId
       return
     }
