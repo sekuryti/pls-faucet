@@ -4,12 +4,30 @@
   import { formatEther } from '@ethersproject/units';
   import { setDefaults as setToast, toast } from 'bulma-toast';
 
-  let address = null;
+  $: address = null;
   let faucetInfo = {
     account: '0x0000000000000000000000000000000000000000',
     network: 'Testnet',
     payout: 1,
   };
+  $: network = ethereum.chainId
+  const updateChainId = async () => {
+    const chainId = await ethereum.request({
+      method: 'eth_chainId',
+    })
+    network = chainId
+  }
+  ethereum.once('connect', async () => {
+    const accounts = await ethereum.request({
+      method: 'eth_requestAccounts',
+    })
+    address = accounts[0]
+  })
+  ethereum.on('connect', updateChainId)
+  ethereum.on('chainChanged', updateChainId)
+  ethereum.on('accountsChanged', (accounts) => {
+    address = accounts[0]
+  })
 
   onMount(async () => {
     const res = await fetch('/api/info');
@@ -25,6 +43,45 @@
     closeOnClick: false,
     animate: { in: 'fadeIn', out: 'fadeOut' },
   });
+
+  const testnetConfig = {
+    chainId: '0x3ac',
+    chainName: 'PulseChain Testnet',
+    nativeCurrency: {
+      name: 'Pulse',
+      symbol: 'PLS',
+      decimals: 18,
+    },
+    rpcUrls: [
+      'https://rpc.testnet.pulsechain.com/',
+    ],
+    blockExplorerUrls: [
+      'https://scan.pulsechain.com/',
+    ],
+    iconUrls: [],
+  }
+
+  async function addTestnetToMetamask () {
+    try {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: testnetConfig.chainId }],
+      })
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [testnetConfig],
+          })
+        } catch (addError) {
+          console.log('unable to add a new chain', addError)
+          return
+        }
+      }
+      console.log('unable to complete request', switchError)
+    }
+  }
 
   async function handleRequest() {
     try {
@@ -96,6 +153,7 @@
           <h2 class="subtitle">
             Serving from {faucetInfo.account}
           </h2>
+          {#if network === testnetConfig.chainId}
           <div class="box">
             <div class="field is-grouped">
               <p class="control is-expanded">
@@ -116,6 +174,11 @@
               </p>
             </div>
           </div>
+          {:else}
+          <button
+            on:click={addTestnetToMetamask}
+            class="button is-primary is-rounded">Switch to / Add PulseChain Testnet to Metamask</button>
+          {/if}
         </div>
       </div>
     </div>
