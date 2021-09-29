@@ -52,7 +52,7 @@
 </script>
 
 <svelte:head>
-  <title>ETH {faucetInfo.network} Faucet</title>
+  <title>tPLS {faucetInfo.network} Faucet</title>
 </svelte:head>
 
 <main>
@@ -65,7 +65,7 @@
               <span class="icon">
                 <i class="fa fa-bath" />
               </span>
-              <span><b>ETH Faucet</b></span>
+              <span><b>tPLS Faucet</b></span>
             </a>
           </div>
           <div id="navbarMenu" class="navbar-menu">
@@ -73,7 +73,7 @@
               <span class="navbar-item">
                 <a
                   class="button is-white is-outlined"
-                  href="https://github.com/chainflag/eth-faucet"
+                  href="https://gitlab.com/chainflag/pls-faucet"
                 >
                   <span class="icon">
                     <i class="fa fa-github" />
@@ -91,7 +91,7 @@
       <div class="container has-text-centered">
         <div class="column is-6 is-offset-3">
           <h1 class="title">
-            Receive {faucetInfo.payout} ETH per request
+            Receive {faucetInfo.payout} tPLS per request
           </h1>
           <h2 class="subtitle">
             Serving from {faucetInfo.account}
@@ -125,7 +125,7 @@
 <style>
   .hero.is-info {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url('/background.jpg') no-repeat center center fixed;
+      url('/saturn-hexagon-vortex.jpeg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

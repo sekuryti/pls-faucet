@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/chainflag/eth-faucet/cmd"
+	"github.com/chainflag/pls-faucet/cmd"
 )
 
 func main() {

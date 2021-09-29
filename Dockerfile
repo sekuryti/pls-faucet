@@ -17,15 +17,15 @@ WORKDIR /backend-build
 COPY . .
 COPY --from=frontend /frontend-build/public ./web/public
 
-RUN go build -o eth-faucet -ldflags "-w -s"
+RUN go build -o pls-faucet -ldflags "-w -s"
 
 FROM alpine
 
 RUN apk add --no-cache ca-certificates
 WORKDIR /app
 
-COPY --from=backend /backend-build/eth-faucet .
+COPY --from=backend /backend-build/pls-faucet .
 
 EXPOSE 8080
 
-ENTRYPOINT ["./eth-faucet"]
+ENTRYPOINT ["./pls-faucet"]

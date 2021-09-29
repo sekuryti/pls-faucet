@@ -1,4 +1,4 @@
-# eth-faucet
+# pls-faucet
 The faucet is a web application with the goal of distributing small amounts of Ether in private and test networks.
 
 ## Get started
@@ -7,12 +7,12 @@ The faucet is a web application with the goal of distributing small amounts of E
 
 * Use private key as sender
 ```bash
-docker run -d -p 8080:8080 -e WEB3_PROVIDER="rpc endpoint" -e PRIVATE_KEY="hex private key" chainflag/eth-faucet:1.0.0 -httpport 8080
+docker run -d -p 8080:8080 -e WEB3_PROVIDER="rpc endpoint" -e PRIVATE_KEY="hex private key" chainflag/pls-faucet:1.0.0 -httpport 8080
 ```
 
 * Use keystore file as sender
 ```bash
-docker run -d -p 8080:8080 -e WEB3_PROVIDER="rpc endpoint" -e KEYSTORE="keystore path" -v `pwd`/keystore:/app/keystore -v `pwd`/password.txt:/app/password.txt chainflag/eth-faucet:1.0.0 -httpport 8080
+docker run -d -p 8080:8080 -e WEB3_PROVIDER="rpc endpoint" -e KEYSTORE="keystore path" -v `pwd`/keystore:/app/keystore -v `pwd`/password.txt:/app/password.txt chainflag/pls-faucet:1.0.0 -httpport 8080
 ```
 
 **Optional Flags**
@@ -53,22 +53,22 @@ or
 
 1. Clone the repository and navigate to the app’s directory
 ```bash
-git clone https://github.com/chainflag/eth-faucet.git
-cd eth-faucet
+git clone https://github.com/chainflag/pls-faucet.git
+cd pls-faucet
 ```
 
 2. Bundle Frontend web with Rollup
 ```bash
 npm run build
 ```
-_For more details, please refer to the [web readme](https://github.com/chainflag/eth-faucet/blob/main/web/README.md)_  
+_For more details, please refer to the [web readme](https://github.com/chainflag/pls-faucet/blob/main/web/README.md)_
 
 3. Build binary application to run faucet
 ```bash
 go build
 export WEB3_PROVIDER=https://ropsten.infura.io
 export PRIVATE_KEY=secret
-./eth-faucet
+./pls-faucet
 ```
 
 ## License
