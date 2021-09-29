@@ -4,14 +4,14 @@
   import { formatEther } from '@ethersproject/units';
   import { setDefaults as setToast, toast } from 'bulma-toast';
 
-  $: address = null;
-  let faucetInfo = {
+  $: address = null
+  $: network = null
+  $: disabled = false
+  $: faucetInfo = {
     account: '0x0000000000000000000000000000000000000000',
     network: 'Testnet',
     payout: 1,
   };
-  $: network = null
-  $: disabled = false
   const testnetConfig = {
     chainId: '0x3ac',
     chainName: 'PulseChain Testnet',
