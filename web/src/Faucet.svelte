@@ -59,6 +59,7 @@
       disabled = true
       return
     }
+    network = testnetConfig.chainId
     faucetInfo.network = capitalize(faucetInfo.network);
     faucetInfo.payout = parseInt(formatEther(faucetInfo.payout));
   });
