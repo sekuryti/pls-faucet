@@ -11,6 +11,7 @@
     payout: 1,
   };
   $: network = null
+  $: disabled = false
   const testnetConfig = {
     chainId: '0x3ac',
     chainName: 'PulseChain Testnet',
@@ -55,6 +56,7 @@
     } catch (err) {}
     if (!faucetInfo.account || faucetInfo.account === '0x0000000000000000000000000000000000000000') {
       network = testnetConfig.chainId
+      disabled = true
       return
     }
     faucetInfo.network = capitalize(faucetInfo.network);
@@ -161,7 +163,11 @@
           <h2 class="subtitle">
             Serving from {faucetInfo.account}
           </h2>
-          {#if network === testnetConfig.chainId}
+          {#if disabled}
+            <div class="box">
+              <p>unable to contact network. please try again later</p>
+            </div>
+          {:else if network === testnetConfig.chainId}
           <div class="box">
             <div class="field is-grouped">
               <p class="control is-expanded">
