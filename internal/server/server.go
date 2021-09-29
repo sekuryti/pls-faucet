@@ -117,7 +117,7 @@ func (s *Server) handleClaim() http.HandlerFunc {
 			"txHash":  txHash,
 			"address": address,
 		}).Info("Funded directly successfully")
-		fmt.Fprintf(w, txHash.String())
+		fmt.Printf("%#v, %s", w, txHash.String())
 	}
 }
 
@@ -134,6 +134,10 @@ func (s *Server) handleInfo() http.HandlerFunc {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
+		if s.TxBuilder == nil {
+			json.NewEncoder(w).Encode(info{})
+			return
+		}
 		json.NewEncoder(w).Encode(info{
 			Account:   s.Sender().String(),
 			ChainName: s.cfg.chainName,

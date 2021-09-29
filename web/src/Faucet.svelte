@@ -10,40 +10,7 @@
     network: 'Testnet',
     payout: 1,
   };
-  $: network = ethereum.chainId
-  const updateChainId = async () => {
-    const chainId = await ethereum.request({
-      method: 'eth_chainId',
-    })
-    network = chainId
-  }
-  ethereum.once('connect', async () => {
-    const accounts = await ethereum.request({
-      method: 'eth_requestAccounts',
-    })
-    address = accounts[0]
-  })
-  ethereum.on('connect', updateChainId)
-  ethereum.on('chainChanged', updateChainId)
-  ethereum.on('accountsChanged', (accounts) => {
-    address = accounts[0]
-  })
-
-  onMount(async () => {
-    const res = await fetch('/api/info');
-    faucetInfo = await res.json();
-    faucetInfo.network = capitalize(faucetInfo.network);
-    faucetInfo.payout = parseInt(formatEther(faucetInfo.payout));
-  });
-
-  setToast({
-    position: 'bottom-center',
-    dismissible: true,
-    pauseOnHover: true,
-    closeOnClick: false,
-    animate: { in: 'fadeIn', out: 'fadeOut' },
-  });
-
+  $: network = null
   const testnetConfig = {
     chainId: '0x3ac',
     chainName: 'PulseChain Testnet',
@@ -60,6 +27,47 @@
     ],
     iconUrls: [],
   }
+  if (window.ethereum) {
+    network = ethereum.chainId
+    const updateChainId = async () => {
+      const chainId = await ethereum.request({
+        method: 'eth_chainId',
+      })
+      network = chainId
+    }
+    ethereum.once('connect', async () => {
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+      address = accounts[0]
+    })
+    ethereum.on('connect', updateChainId)
+    ethereum.on('chainChanged', updateChainId)
+    ethereum.on('accountsChanged', (accounts) => {
+      address = accounts[0]
+    })
+  }
+
+  onMount(async () => {
+    const res = await fetch('/api/info');
+    try {
+      faucetInfo = await res.json();
+    } catch (err) {}
+    if (faucetInfo.account === '0x0000000000000000000000000000000000000000') {
+      network = testnetConfig.chainId
+      return
+    }
+    faucetInfo.network = capitalize(faucetInfo.network);
+    faucetInfo.payout = parseInt(formatEther(faucetInfo.payout));
+  });
+
+  setToast({
+    position: 'bottom-center',
+    dismissible: true,
+    pauseOnHover: true,
+    closeOnClick: false,
+    animate: { in: 'fadeIn', out: 'fadeOut' },
+  });
 
   async function addTestnetToMetamask () {
     try {
