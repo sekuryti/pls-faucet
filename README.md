@@ -53,7 +53,7 @@ or
 
 1. Clone the repository and navigate to the app’s directory
 ```bash
-git clone https://github.com/chainflag/pls-faucet.git
+git clone https://gitlab.com/pulsechaincom/pls-faucet.git
 cd pls-faucet
 ```
 
@@ -61,7 +61,7 @@ cd pls-faucet
 ```bash
 npm run build
 ```
-_For more details, please refer to the [web readme](https://github.com/chainflag/pls-faucet/blob/main/web/README.md)_
+_For more details, please refer to the [web readme](https://gitlab.com/pulsechaincom/pls-faucet/blob/main/web/README.md)_
 
 3. Build binary application to run faucet
 ```bash

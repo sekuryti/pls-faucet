@@ -1,6 +1,6 @@
 # pls-faucet-web
 
-This is the Frontend of [pls-faucet](https://github.com/chainflag/pls-faucet). It's build with https://github.com/sveltejs/template.
+This is the Frontend of [pls-faucet](https://gitlab.com/pulsechaincom/pls-faucet). It's build with https://github.com/sveltejs/template.
 
 ## Get started
 

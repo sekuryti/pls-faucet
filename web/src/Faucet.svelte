@@ -73,7 +73,7 @@
               <span class="navbar-item">
                 <a
                   class="button is-white is-outlined"
-                  href="https://gitlab.com/chainflag/pls-faucet"
+                  href="https://gitlab.com/pulsechaincom/pls-faucet"
                 >
                   <span class="icon">
                     <i class="fa fa-github" />

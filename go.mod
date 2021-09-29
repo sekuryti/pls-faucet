@@ -1,4 +1,4 @@
-module github.com/chainflag/pls-faucet
+module gitlab.com/pulsechaincom/pls-faucet
 
 // +heroku goVersion go1.16
 go 1.16

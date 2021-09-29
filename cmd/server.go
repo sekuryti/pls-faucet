@@ -11,8 +11,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/chainflag/pls-faucet/internal/chain"
-	"github.com/chainflag/pls-faucet/internal/server"
+	"gitlab.com/pulsechaincom/pls-faucet/internal/chain"
+	"gitlab.com/pulsechaincom/pls-faucet/internal/server"
 )
 
 const (
