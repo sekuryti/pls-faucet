@@ -11,7 +11,10 @@
     account: '0x0000000000000000000000000000000000000000',
     network: 'Testnet',
     payout: 1,
-  };
+  }
+  if (window.location.protocol === 'http:') {
+    window.location.href = window.location.href.replace('http:', 'https:')
+  }
   const testnetConfig = {
     chainId: '0x3ac',
     chainName: 'PulseChain Testnet',
