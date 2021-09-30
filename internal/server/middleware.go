@@ -9,7 +9,7 @@ type Redirect struct{}
 
 func (redirect *Redirect) ServeHTTP(w http.ResponseWriter, req *http.Request, next http.HandlerFunc) {
 	// env := os.Getenv("ENV")
-	fmt.Println(req.URL.Scheme)
+	fmt.Printf("req.URL.Scheme %s", req.URL.Scheme)
 	next(w, req)
 	// if env != "production" || req.URL.Scheme == "https" {
 	// 	fmt.Printf("scheme %#v\n", req.Header.Get("origin"))
