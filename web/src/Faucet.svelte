@@ -12,9 +12,6 @@
     network: 'Testnet',
     payout: 1,
   }
-  if (window.location.protocol === 'http:') {
-    window.location.href = window.location.href.replace('http:', 'https:')
-  }
   const testnetConfig = {
     chainId: '0x3ac',
     chainName: 'PulseChain Testnet',
@@ -118,9 +115,13 @@
     const res = await fetch('/api/claim', {
       method: 'POST',
       body: formData,
-    });
-    let message = await res.text();
-    let type = res.ok ? 'is-success' : 'is-warning';
+    })
+    const { ok } = res
+    let type = ok ? 'is-success' : 'is-warning'
+    let message = 'unable to claim'
+    if (ok) {
+      ;({ hash: message } = await res.json())
+    }
     toast({ message, type });
   }
 
