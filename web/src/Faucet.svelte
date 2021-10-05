@@ -73,6 +73,7 @@
   });
 
   setToast({
+    duration: 10000,
     position: 'bottom-center',
     dismissible: true,
     pauseOnHover: true,
@@ -118,10 +119,7 @@
     })
     const { ok } = res
     let type = ok ? 'is-success' : 'is-warning'
-    let message = 'unable to claim'
-    if (ok) {
-      ;({ hash: message } = await res.json())
-    }
+    let message = await res.text()
     toast({ message, type });
   }
 

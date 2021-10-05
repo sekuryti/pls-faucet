@@ -80,9 +80,6 @@ func (s *Server) consumeQueue() {
 }
 
 func (s *Server) handleClaim() http.HandlerFunc {
-	type txInfo struct {
-		Hash string `json:"hash"`
-	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != "POST" {
 			http.NotFound(w, r)
@@ -120,9 +117,7 @@ func (s *Server) handleClaim() http.HandlerFunc {
 			"txHash":  txHash,
 			"address": address,
 		}).Info("Funded directly successfully")
-		json.NewEncoder(w).Encode(txInfo{
-			Hash: txHash.String(),
-		})
+		fmt.Fprintf(w, "tx id: %s", txHash.String())
 	}
 }
 
