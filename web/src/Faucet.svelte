@@ -11,6 +11,7 @@
     account: '0x0000000000000000000000000000000000000000',
     network: 'Testnet',
     payout: 1,
+    rpcAvailable: true,
   }
   const testnetConfig = {
     chainId: '0x3ac',
