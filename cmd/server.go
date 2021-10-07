@@ -11,8 +11,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/crypto"
 
-	"github.com/chainflag/eth-faucet/internal/chain"
-	"github.com/chainflag/eth-faucet/internal/server"
+	"gitlab.com/pulsechaincom/pls-faucet/internal/chain"
+	"gitlab.com/pulsechaincom/pls-faucet/internal/server"
 )
 
 const (
@@ -50,7 +50,10 @@ func Execute() {
 		chainID = big.NewInt(int64(value))
 	}
 
-	txBuilder := chain.NewTxBuilder(os.Getenv("WEB3_PROVIDER"), privateKey, chainID)
+	txBuilder, err := chain.NewTxBuilder(os.Getenv("WEB3_PROVIDER"), privateKey, chainID)
+	if err != nil {
+		fmt.Println(err)
+	}
 	config := server.NewConfig(*chainNameFlag, *httpPortFlag, *intervalFlag, *payoutFlag, *proxyCntFlag, *queueCapFlag)
 	go server.NewServer(txBuilder, config).Run()
 

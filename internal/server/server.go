@@ -12,8 +12,8 @@ import (
 	"github.com/urfave/negroni"
 	"golang.org/x/sync/semaphore"
 
-	"github.com/chainflag/eth-faucet/internal/chain"
-	"github.com/chainflag/eth-faucet/web"
+	"gitlab.com/pulsechaincom/pls-faucet/internal/chain"
+	"gitlab.com/pulsechaincom/pls-faucet/web"
 )
 
 const AddressKey string = "address"
@@ -52,7 +52,7 @@ func (s *Server) Run() {
 		}
 	}()
 
-	n := negroni.New(negroni.NewRecovery(), negroni.NewLogger())
+	n := negroni.New(NewRedirect(), negroni.NewRecovery(), negroni.NewLogger())
 	n.UseHandler(s.setupRouter())
 	log.Infof("Starting http server %d", s.cfg.httpPort)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(s.cfg.httpPort), n))
@@ -134,6 +134,10 @@ func (s *Server) handleInfo() http.HandlerFunc {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
+		if s.TxBuilder == nil {
+			json.NewEncoder(w).Encode(info{})
+			return
+		}
 		json.NewEncoder(w).Encode(info{
 			Account:   s.Sender().String(),
 			ChainName: s.cfg.chainName,

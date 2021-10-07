@@ -1,1 +1,1 @@
-web: bin/eth-faucet -httpport $PORT -proxycount 1
+web: bin/pls-faucet -httpport $PORT -proxycount 1
